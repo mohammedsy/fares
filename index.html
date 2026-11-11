@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audio Player</title>
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:#2a1630}
+body{background:linear-gradient(160deg,#3a2058,#7a3c4e 60%,#b4523a);display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+#b{width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 0 rgba(255,255,255,.5);animation:p 1.8s infinite;transition:opacity .4s}
+#b svg{width:56px;height:56px;fill:#2a1630;margin-inline-start:-6px}
+body.on #b{animation:none;opacity:.35}
+body.on #b svg{display:none}
+#e{display:none;gap:7px;align-items:flex-end;height:50px}
+body.on #e{display:flex;position:absolute}
+#e i{width:8px;background:#fff;border-radius:4px;animation:w .9s infinite ease-in-out}
+#e i:nth-child(2){animation-delay:.15s}#e i:nth-child(3){animation-delay:.3s}#e i:nth-child(4){animation-delay:.45s}
+@keyframes p{70%{box-shadow:0 0 0 38px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+@keyframes w{0%,100%{height:12px}50%{height:46px}}
+</style></head><body>
+<div id="b"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></div>
+<div id="e"><i></i><i></i><i></i><i></i></div>
+<audio id="a" src="audio.m4a" preload="auto" playsinline></audio>
+<script>
+var a=document.getElementById('a');
+function go(){a.play().then(function(){document.body.classList.add('on');off()}).catch(function(){})}
+function off(){['pointerdown','touchstart','click','keydown'].forEach(function(e){document.removeEventListener(e,go)})}
+a.addEventListener('ended',function(){document.body.classList.remove('on');['pointerdown','touchstart','click','keydown'].forEach(function(e){document.addEventListener(e,go)})});
+['pointerdown','touchstart','click','keydown'].forEach(function(e){document.addEventListener(e,go)});
+try{go()}catch(e){}
+</script></body></html>
